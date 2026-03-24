@@ -1,0 +1,10 @@
+﻿build/
+dist/
+*.exe
+*.dll
+*.lib
+*.pdb
+.vs/
+*.sln
+*.vcxproj*
+logs/

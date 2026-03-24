@@ -1,0 +1,4 @@
+﻿  main.c
+C:\Users\Arcade\Documents\GitHub\Squahsfs  wsquashfs Loader\src\main.c(1989,17): warning C4113: 'int (__cdecl *)(const char *,const timespec *)' es distinto en las listas de parámetros de 'int (__cdecl *)(const char *,const fuse_timespec *)'
+  sqfs_fs.c
+LINK : fatal error LNK1181: no se puede abrir el archivo de entrada 'libsquashfs.lib'
