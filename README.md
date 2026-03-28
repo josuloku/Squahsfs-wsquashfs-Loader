@@ -1,110 +1,106 @@
-# WsquashTools — Compresor de juegos para SquashWinFS
+ko-fi.com/josuloku ***
 
-## English
+# SquashWinFS (v1.1)
 
-**WsquashTools** is a companion tool for [SquashWinFS](https://github.com/Josuloku/SquashWinFS) that helps you create `.wsquashfs` images from your game folders. Simply select the game directory, specify the executable, and it automatically generates the `autorun.cmd` needed for the loader to work.
-
----
-
-### Features
-
-- **Easy-to-use GUI**: Select folder, pick executable, done
-- **Automatic autorun.cmd**: Generates the launch script automatically
-- **Compression presets**: Choose compression level (fast, balanced, maximum)
-- **Multiple codecs**: Supports zstd, lz4, lzma, lzo, gzip
-- **Extraction tool**: Also includes unsquashfs to extract existing images
+[Español](#español) | [English](#english)
 
 ---
 
-### How it works
+<a name="español"></a>
+# 🇪🇸 Español
 
-1. Run `ToolsApp.exe`
-2. Click "Select Folder" and choose your game directory
-3. Click "Select Executable" and pick the main `.exe`
-4. Choose compression settings (codec and level)
-5. Click "Create Image"
-6. Done! The `.wsquashfs` is ready to use with SquashWinFS
+**SquashWinFS** es una herramienta ligera para Windows diseñada para montar imágenes SquashFS de forma transparente. Permite ejecutar juegos o aplicaciones directamente desde contenedores comprimidos sin descompresión previa, utilizando un sistema de **Overlay** para persistencia de datos.
 
----
+Desarrollado por **Josuloku**.
 
-### Requirements
+## ✨ Características
+- **Montaje FUSE:** Monta archivos `.squashfs` y `.wsquashfs` como unidades virtuales.
+- **Sistema de Overlay:** Las escrituras (savegames, configs) se guardan en `%LOCALAPPDATA%\SquashWinFS\Overlay`, manteniendo la imagen original intacta.
+- **Detección de Ejecución:** Ejecuta automáticamente el archivo `autorun.cmd` si existe en la raíz de la imagen.
+- **Modo Extracción (Anti-Cheat):** Fallback automático a extracción física si el juego tiene sistemas Anti-Cheat incompatibles con unidades virtuales.
 
-- **Windows 10/11** (x64)
-- No additional dependencies required - all tools are bundled
+## 📋 Requisitos y Dependencias
 
----
+Para que SquashWinFS funcione, es fundamental distinguir entre lo que ya viene incluido y lo que debes instalar por tu cuenta:
 
-### Included tools
+### ✅ Ya incluido (No requiere instalación)
+- **Librerías SquashFS:** Las DLLs necesarias (`libsquashfs.dll`, `zlib1.dll`, etc.) **ya vienen incluidas** junto al ejecutable. No necesitas buscarlas ni instalarlas aparte, pero **deben permanecer en la misma carpeta** que `SquashWinFS.exe`.
 
-- `mksquashfs.exe` - Creates SquashFS images
-- `unsquashfs.exe` - Extracts SquashFS images
-- Various compression libraries (zstd, lz4, lzma, lzo)
+### ⚠️ Requiere Instalación Manual (OBLIGATORIO)
+- **WinFSP (Windows File System Proxy):** Es el motor que permite crear unidades virtuales. **Debes instalarlo manualmente** en tu sistema o el programa no podrá funcionar.
+    - **[Descargar WinFSP aquí](https://winfsp.dev/rel/)** (Descarga e instala la versión `.msi` más reciente).
 
----
+## 🚀 Cómo Ejecutarlo
 
-## Español
+### 1. Arrastrar y Soltar (Drag & Drop)
+Arrastra tu archivo `.squashfs` o `.wsquashfs` sobre `SquashWinFS.exe`. El programa buscará una letra libre, montará la imagen y ejecutará el contenido.
 
-**WsquashTools** es una herramienta complementaria para [SquashWinFS](https://github.com/Josuloku/SquashWinFS) que te ayuda a crear imágenes `.wsquashfs` desde tus carpetas de juegos. Simplemente selecciona el directorio del juego, indica el ejecutable, y genera automáticamente el `autorun.cmd` necesario para que el loader funcione.
+### 2. Registrar como Programa Predeterminado (Recomendado)
+Para abrir tus juegos con un doble clic:
+1. Clic derecho sobre un archivo `.squashfs` -> **Abrir con...**
+2. Selecciona **Elegir otra aplicación**.
+3. Busca `SquashWinFS.exe` en tu PC.
+4. Marca **"Siempre usar esta aplicación para abrir archivos .squashfs"**.
+5. Repite para la extensión `.wsquashfs`.
 
----
+### 3. Línea de Comandos (Avanzado)
+```powershell
+# Montaje básico
+SquashWinFS.exe -i "juego.squashfs" -m Z:
 
-### Características
-
-- **GUI fácil de usar**: Selecciona carpeta, elige ejecutable, listo
-- **autorun.cmd automático**: Genera el script de lanzamiento automáticamente
-- **Ajustes de compresión**: Elige nivel (rápido, equilibrado, máximo)
-- **Múltiples códecs**: Soporta zstd, lz4, lzma, lzo, gzip
-- **Herramienta de extracción**: También incluye unsquashfs para extraer imágenes existentes
-
----
-
-### Cómo funciona
-
-1. Ejecuta `ToolsApp.exe`
-2. Clic en "Seleccionar Carpeta" y elige el directorio del juego
-3. Clic en "Seleccionar Ejecutable" y elige el `.exe` principal
-4. Elige los ajustes de compresión (códec y nivel)
-5. Clic en "Crear Imagen"
-6. ¡Hecho! El `.wsquashfs` está listo para usar con SquashWinFS
-
----
-
-### Requisitos
-
-- **Windows 10/11** (x64)
-- No requiere dependencias adicionales - todas las herramientas están incluidas
-
----
-
-### Herramientas incluidas
-
-- `mksquashfs.exe` - Crea imágenes SquashFS
-- `unsquashfs.exe` - Extrae imágenes SquashFS
-- Varias librerías de compresión (zstd, lz4, lzma, lzo)
-
----
-
-## Workflow completo / Complete Workflow
-
-```
-1. WsquashTools → Comprime tu juego en .wsquashfs
-2. Transferir al PC Windows
-3. SquashWinFS → Monta la imagen al instante
-4. ¡Juega!
+# Forzar modo extracción
+SquashWinFS.exe -i "juego.squashfs" --mode extract
 ```
 
 ---
 
-## Support / Apoyo
+<a name="english"></a>
+# 🇺🇸 English
 
-☕ **Did this save you time?** This was developed in my spare time with care, and I'll keep releasing related tools. If it saves you time, space, or headaches, consider buying me a coffee:
+**SquashWinFS** is a lightweight Windows tool designed to mount SquashFS images transparently. It allows you to run games or applications directly from compressed containers without prior decompression, using an **Overlay** system for data persistence.
 
-👉 **https://ko-fi.com/josuloku** ☕
+Developed by **Josuloku**.
 
-Every coffee makes my day! 😊
+## ✨ Features
+- **FUSE Mounting:** Mounts `.squashfs` and `.wsquashfs` files as virtual drives.
+- **Overlay System:** All writes (savegames, configs) are stored in `%LOCALAPPDATA%\SquashWinFS\Overlay`, keeping the original image intact.
+- **Auto-Run Detection:** Automatically executes `autorun.cmd` if found in the image root.
+- **Extraction Mode (Anti-Cheat):** Automatic fallback to physical extraction if the game's Anti-Cheat system is incompatible with virtual drives.
+
+## 📋 Requirements and Dependencies
+
+For SquashWinFS to work, you must distinguish between what is already included and what you need to install yourself:
+
+### ✅ Already Included (No installation required)
+- **SquashFS Libraries:** The necessary DLLs (`libsquashfs.dll`, `zlib1.dll`, etc.) **are already included** in the package. You don't need to install them separately, but **they must remain in the same directory** as `SquashWinFS.exe`.
+
+### ⚠️ Manual Installation Required (MANDATORY)
+- **WinFSP (Windows File System Proxy):** This is the core engine for virtual drives. **You must install it manually** or the program will not work.
+    - **[Download WinFSP here](https://winfsp.dev/rel/)** (Download and install the latest `.msi` version).
+
+## 🚀 How to Run
+
+### 1. Drag & Drop
+Simply drag your `.squashfs` or `.wsquashfs` file onto `SquashWinFS.exe`. The program will find a free drive letter, mount the image, and run the content.
+
+### 2. Set as Default Program (Recommended)
+To open your games with a double-click:
+1. Right-click a `.squashfs` file -> **Open with...**
+2. Select **Choose another app**.
+3. Browse and select `SquashWinFS.exe` on your PC.
+4. Check **"Always use this app to open .squashfs files"**.
+5. Repeat for the `.wsquashfs` extension.
+
+### 3. Command Line (Advanced)
+```powershell
+# Basic mount
+SquashWinFS.exe -i "game.squashfs" -m Z :
+
+# Force extraction mode
+SquashWinFS.exe -i "game.squashfs" --mode extract
+```
+
+ko-fi.com/josuloku ***
 
 ---
-
-## License / Licencia
-
-This project is free software. See included tool terms (squashfs-tools).
+**Credits:** Created by **Josuloku**.
